@@ -53,6 +53,7 @@ AUTOSTART_PROCESSES(&example_abc_process);
 static void
 abc_recv(struct abc_conn *c)
 {
+  leds_toggle(LEDS_RED);
   printf("abc message received '%s'\n", (char *)packetbuf_dataptr());
 }
 static const struct abc_callbacks abc_call = {abc_recv};
@@ -76,6 +77,7 @@ PROCESS_THREAD(example_abc_process, ev, data)
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
 
     packetbuf_copyfrom("Hello", 6);
+    leds_toggle(LEDS_GREEN);
     abc_send(&abc);
     printf("abc message sent\n");
   }
